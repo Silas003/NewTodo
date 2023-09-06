@@ -8,6 +8,7 @@ function App() {
   const [newTodo, setNewTodo] = useState('');
   const [editingTodo, setEditingTodo] = useState(null);
 
+  //handling api get request 
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -19,7 +20,7 @@ function App() {
     };
     fetchData();
   }, []);
-
+//handling api post request
   const handleCreateTodo = async () => {
     try {
       const response = await axios.post(apiUrl, { title: newTodo, completed: false });
@@ -30,7 +31,7 @@ function App() {
       console.error('Error creating todo:', error);
     }
   };
-
+//handling api put/patch request
   const handleEditTodo = async (todo) => {
     try {
       const response = await axios.put(`${apiUrl}/${todo.id}`, { title: todo.title, completed: todo.completed });
@@ -41,7 +42,7 @@ function App() {
       console.error('Error updating todo:', error);
     }
   };
-
+//handling api delete request
   const handleDeleteTodo = async (id) => {
     try {
       await axios.delete(`${apiUrl}/${id}`);
@@ -53,6 +54,7 @@ function App() {
   };
 
   return (
+    //entry point
     <div style={{ textAlign: 'center', backgroundColor: 'pink', minHeight: '100vh', padding: '20px' }}>
       <h1 style={{ fontSize: '30px', fontWeight: 'bold', color: 'white' }}>TodoApp</h1>
       <div style={{ display: 'flex', alignItems: 'center', marginTop: '25px', marginBottom: '25px', borderRadius: '12px' }}>
@@ -68,6 +70,7 @@ function App() {
         </button>
       </div>
       <h2 style={{ fontSize: '30px', fontWeight: 'bold', color: 'white' }}>Do The Best You can</h2>
+      {/* listing the response from the get request  and also contains the CRUD functionality*/}
       <ul
   
       style={{ listStyleType: 'none', backgroundColor: 'dodgerblue', border: 2,padding:10, borderRadius: 12,width:500,alignItems:'center' }}>
@@ -87,6 +90,7 @@ function App() {
             ) : (
               <div style={{ color: 'white', marginRight: '10px' }}>{todo.title}</div>
             )}
+
             {editingTodo === todo.id ? (
               <button
                 style={{ backgroundColor: 'gold', padding: '10px', borderRadius: '6px', marginRight: '12px' }}
